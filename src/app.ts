@@ -23,12 +23,13 @@ try {
   process.exit(1);
 }
 
+// TODO Implement Sequalize ORM
 Database.init()
   .then(res => {
-    console.info(`Database Ok : Version ${ res.version }`);
+    // console.info(`Database Ok : Version ${ res.version }`);
     new Bot(config, locales);
   })
   .catch((err: Error) => {
-    console.error(`Database KO : ${ err }`);
+    // console.error(`Database KO : ${ err }`);
     process.exit(1);
   });

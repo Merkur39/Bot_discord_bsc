@@ -3,6 +3,7 @@ import { guildMemberAdd } from './controllers/member.controller';
 import { IBotConfig } from 'types/bot-user.interface';
 import { checkStream } from './controllers/twitch.controller';
 import { sendMessageTwitch } from './controllers/message.controller';
+import { ITwitch } from 'types/twitch.interface';
 
 /**
  * @export
@@ -13,7 +14,6 @@ export class Bot {
   private _client: Client;
   private _config: IBotConfig;
   private _locales: string;
-  private _onStream: boolean;
 
   /**
    *Creates an instance of Bot.
@@ -24,7 +24,6 @@ export class Bot {
   constructor(config: IBotConfig, locales: string) {
     this._config = config;
     this._locales = locales;
-    this._onStream = false;
     this._start();
   }
 
@@ -45,25 +44,11 @@ export class Bot {
       }
       this._client.user.setStatus('online');
 
-      checkStream('merkur_tv').then(res => {
-        if (res.stream) {
-          this._onStream = true;
-          sendMessageTwitch(this._client, res);
-        } else {
-          this._onStream = false;
-        }
+      this._client.guilds.forEach(val => {
+        const test = val.roles.find(role => role.name === 'Streamer');
+        console.log(test);
       });
     });
-
-    // const intervalDefault = setInterval(() => {
-    //   checkStream('merkur_tv').then(res => {
-    //     res.stream ? state = true : state = false;
-
-    //     if (!state) {
-    //       sendMessageTwitch(this._client);
-    //     }
-    //   });
-    // }, 1000000);
 
     this._client.on('guildMemberAdd', async (gMember) => guildMemberAdd(this._client, gMember, this._locales, this._config));
 

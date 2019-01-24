@@ -2,5 +2,8 @@
   "username": "BatéeSocial",
   "game": "",
   "accessRole": "Membre",
-  "lang": "fr"
+  "lang": "fr",
+  "twitch": {
+    "name": "chowh1"
+  }
 }

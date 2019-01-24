@@ -14,11 +14,11 @@
     "discord.js": "^11.4.2",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "mongoose": "^5.4.0"
+    "sequelize": "^4.42.0"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.3.5",
     "@types/node": "^10.12.18",
+    "@types/sequelize": "^4.27.34",
     "nodemon": "^1.18.9",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.0",

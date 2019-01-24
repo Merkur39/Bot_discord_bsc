@@ -73,7 +73,7 @@ export interface IPreview {
   template: string;
 }
 
-export interface ResponseGetHttps {
+export interface IResponseGetHttps {
   on: {
     (arg0: string, arg1: (chunk: BinaryType) => string): void;
     (arg0: string, arg1: () => void): void;

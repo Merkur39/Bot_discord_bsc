@@ -1,37 +1,25 @@
 const https = require('https');
-
-interface ResponseTwitch {
-  stream: String;
-  _links: {
-    self: String;
-    channel: String;
-  };
-}
-
-interface ResponseGetHttps {
-  on: {
-    (arg0: string, arg1: (chunk: BinaryType) => string): void;
-    (arg0: string, arg1: () => void): void;
-  };
-}
+import { IResponseGetHttps, ITwitch } from '../types/twitch.interface';
 
 export class Twitch {
   private _onStream: boolean;
+  private _urlTwitch: string;
 
   constructor(name: string) {
-    const urlTwitch = `https://api.twitch.tv/kraken/streams/${ name }?client_id=${ process.env.CLIENT_ID }`;
+    this._urlTwitch = `https://api.twitch.tv/kraken/streams/${ name }?client_id=${ process.env.CLIENT_ID }`;
 
-    this._start(urlTwitch).then(res => {
-      this._onStream = !!res.stream;
-      if (this._onStream) {
+    this._checkStream(this._urlTwitch).then(res => {
+      if (!!res.stream) {
         this._checkOnStream();
+      } else {
+        console.log('No Stream');
       }
     });
   }
 
-  private _start(urlTwitch: string): Promise<ResponseTwitch> {
+  private _checkStream(urlTwitch: string): Promise<ITwitch> {
     return new Promise((resolve, reject) => {
-      https.get(urlTwitch, (resp: ResponseGetHttps) => {
+      https.get(urlTwitch, (resp: IResponseGetHttps) => {
         let data = '';
         resp.on('data', (chunk: BinaryType) => data += chunk);
         resp.on('end', () => resolve(JSON.parse(data)));
@@ -40,6 +28,8 @@ export class Twitch {
   }
 
   private _checkOnStream() {
-    //
+    setInterval(() => {
+      this._checkStream(this._urlTwitch);
+    }, 5000);
   }
 }

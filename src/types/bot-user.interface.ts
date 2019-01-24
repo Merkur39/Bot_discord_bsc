@@ -5,6 +5,9 @@ export interface IBotConfig {
   game: string;
   accessRole: string;
   lang: string;
+  twitch: {
+    name: string;
+  };
 }
 
 export interface IUser {
