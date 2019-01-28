@@ -27,9 +27,10 @@ try {
 Database.init()
   .then(res => {
     // console.info(`Database Ok : Version ${ res.version }`);
-    new Bot(config, locales);
+    // new Bot(config, locales);
+    console.log(res);
   })
   .catch((err: Error) => {
     // console.error(`Database KO : ${ err }`);
-    process.exit(1);
+    // process.exit(1);
   });

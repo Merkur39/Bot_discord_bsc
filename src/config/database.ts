@@ -2,18 +2,28 @@ import { IConnectOptions } from 'types/databaseConfig.interface';
 
 /**
  * @export
- * @abstract
  * @class Database
  */
-export abstract class Database {
+export class Database {
+  private static instance: Database;
+
+  constructor() {
+    // TODO Implement Sequalize ORM
+  }
+
   /**
    * Initialize Database
    * @static
+   * @returns
    * @memberof Database
    */
-  public static async init() {
-    Promise.resolve();
+  public static init() {
+    return new Promise((resolve, reject) => {
+      if (!Database.instance) {
+        Database.instance = new Database();
+        resolve(Database.instance);
+      }
+      reject('Database is already instantiated');
+    });
   }
 }
-
-// TODO Implement Sequalize ORM
